@@ -1,5 +1,5 @@
 require "archive/tar/minitar"
-require "zlib"
+require "zlib" unless defined?(Zlib)
 
 module Berkshelf
   # A class for archiving and compressing directory containing one or more cookbooks.
@@ -40,10 +40,8 @@ module Berkshelf
     # @return [String]
     #   path to the generated archive
     def run(source)
-      Dir.chdir(source.to_s) do |dir|
-        tgz = Zlib::GzipWriter.new(File.open(out_file, "wb"))
-        Archive::Tar::Minitar.pack(Dir.glob("*"), tgz)
-      end
+      tgz = Zlib::GzipWriter.new(File.open(out_file, "wb"))
+      Archive::Tar::Minitar.pack(Dir.glob("#{source}/*"), tgz)
 
       out_file
     rescue SystemCallError => ex
@@ -64,10 +62,10 @@ module Berkshelf
 
     private
 
-      # @return [String]
+    # @return [String]
     attr_reader :out_dir
 
-      # @return [String]
+    # @return [String]
     attr_reader :filename
   end
 end

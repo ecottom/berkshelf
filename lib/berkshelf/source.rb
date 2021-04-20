@@ -1,7 +1,7 @@
-require "berkshelf/api-client"
-require "berkshelf/chef_repo_universe"
-require "berkshelf/ssl_policies"
-require "openssl"
+require_relative "api-client"
+require_relative "chef_repo_universe"
+require_relative "ssl_policies"
+require "openssl" unless defined?(OpenSSL)
 
 module Berkshelf
   class Source
@@ -132,7 +132,7 @@ module Berkshelf
     #
     # @return [APIClient::RemoteCookbook]
     def latest(name)
-      versions(name).sort.last
+      versions(name).max
     end
 
     # @param [String] name

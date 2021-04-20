@@ -1,6 +1,7 @@
-require "net/http"
-require "mixlib/archive"
-require "berkshelf/ssl_policies"
+require "net/http" unless defined?(Net::HTTP)
+require "mixlib/archive" unless defined?(Mixlib::Archive)
+require_relative "ssl_policies"
+require "faraday" unless defined?(Faraday)
 
 module Berkshelf
   class Downloader
@@ -83,7 +84,7 @@ module Berkshelf
           client_key: source.options[:client_key] || Berkshelf::Config.instance.chef.client_key,
           ssl: source.options[:ssl],
         }
-        RidleyCompat.new_client(credentials) do |conn|
+        RidleyCompat.new_client(**credentials) do |conn|
           cookbook = Chef::CookbookVersion.load(name, version)
           manifest = cookbook.cookbook_manifest
           manifest.by_parent_directory.each do |segment, files|
@@ -144,7 +145,7 @@ module Berkshelf
 
         File.join(unpack_dir, cookbook_directory)
       when :uri
-        require "open-uri"
+        require "open-uri" unless defined?(OpenURI)
 
         tmp_dir      = Dir.mktmpdir
         archive_path = Pathname.new(tmp_dir) + "#{name}-#{version}.tar.gz"

@@ -1,5 +1,4 @@
-# -*- encoding: utf-8; mode: ruby -*-
-require File.expand_path("../lib/berkshelf/version", __FILE__)
+require File.expand_path("lib/berkshelf/version", __dir__)
 
 Gem::Specification.new do |s|
   s.authors = [
@@ -36,9 +35,9 @@ Gem::Specification.new do |s|
   s.add_dependency "solve",                "~> 4.0"
   s.add_dependency "thor",                 ">= 0.20"
   s.add_dependency "octokit",              "~> 4.0"
-  s.add_dependency "mixlib-archive",       ">= 0.4", "< 2.0"
+  s.add_dependency "mixlib-archive",       ">= 1.1.4", "< 2.0" # needed for ruby 3.0 / Dir.chdir removal
   s.add_dependency "concurrent-ruby",      "~> 1.0"
-  s.add_dependency "chef",                 ">= 13.6.52"
+  s.add_dependency "chef",                 ">= 15.7.32" # needed for --skip-syntax-check
   s.add_dependency "chef-config"
   # this is required for Mixlib::Config#from_json
   s.add_dependency "mixlib-config", ">= 2.2.5"

@@ -45,10 +45,10 @@ module Berkshelf
 
     private
 
-      # Upload the list of cookbooks to the Chef Server, with some exception
-      # wrapping.
-      #
-      # @param [Array<String>] cookbooks
+    # Upload the list of cookbooks to the Chef Server, with some exception
+    # wrapping.
+    #
+    # @param [Array<String>] cookbooks
     def upload(cookbooks)
       Berkshelf.log.info "Starting upload"
 
@@ -75,7 +75,8 @@ module Berkshelf
                 [ cookbook_version ],
                 force: options[:force],
                 concurrency: 1, # sadly
-                rest: connection
+                rest: connection,
+                skip_syntax_check: options[:skip_syntax_check]
               ).upload_cookbooks
               Berkshelf.formatter.uploaded(cookbook, connection)
             rescue Chef::Exceptions::CookbookFrozen

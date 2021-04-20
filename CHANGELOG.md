@@ -1,5 +1,43 @@
 # Change Log
 
+## [7.2.0](https://github.com/berkshelf/berkshelf/tree/7.2.0) (2021-02-11)
+
+- Require mixlib-archive 1.1.4 or later for Ruby 3.0 compatibility
+- Resolve failures on Ruby 3
+- Modernize code that could result in race conditions, especially in Test Kitchen with high concurrency
+- Move CI from AppVeyor / Travis CI to GitHub Actions for all platforms
+- Add macOS testing
+- Fix all CI failures for a nice green build
+
+## [7.1.0](https://github.com/berkshelf/berkshelf/tree/7.1.0) (2020-06-25)
+
+[Full Changelog](https://github.com/berkshelf/berkshelf/compare/v7.0.10...7.1.0)
+
+**Merged pull requests:**
+
+- Add splat to Ridley create options to silence warning on upload [\#1844](https://github.com/berkshelf/berkshelf/pull/1844) ([clintoncwolfe](https://github.com/clintoncwolfe))
+
+## [v7.0.10](https://github.com/berkshelf/berkshelf/tree/v7.0.10) (2020-04-27)
+
+[Full Changelog](https://github.com/berkshelf/berkshelf/compare/v7.0.9...v7.0.10)
+
+**Merged pull requests:**
+
+- Ruby 2.7: double-splat to expand optional args [\#1840](https://github.com/berkshelf/berkshelf/pull/1840) ([marcparadise](https://github.com/marcparadise))
+- Add ISSUE\_TEMPLATE & Update PULL\_REQUEST [\#1834](https://github.com/berkshelf/berkshelf/pull/1834) ([vsingh-msys](https://github.com/vsingh-msys))
+
+## [7.0.9](https://github.com/berkshelf/berkshelf/tree/7.0.9) (2020-01-27)
+[Full Changelog](https://github.com/berkshelf/berkshelf/compare/v7.0.8...7.0.9)
+
+**Merged pull requests:**
+
+- berks upload skip syntax check fixes [\#1836](https://github.com/berkshelf/berkshelf/pull/1810) ([vsingh-msys ](https://github.com/vsingh-msys ))
+- Update travis config [\#1832](https://github.com/berkshelf/berkshelf/pull/1832) ([tas50](https://github.com/tas50))
+- Fixes berks verify path is broken [\#1833](https://github.com/berkshelf/berkshelf/pull/1833) ([vsingh-msys](https://github.com/vsingh-msys))
+- Swap usage of .load_cookbooks with .load! to avoid deprecation - Update travis config [\#1831](https://github.com/berkshelf/berkshelf/pull/1831) ([tas50](https://github.com/tas50))
+- Substitute require for require_relative [\#1828](https://github.com/berkshelf/berkshelf/pull/1828) ([tas50](https://github.com/tas50))
+- Fix gitlab using faraday [\#1816](https://github.com/berkshelf/berkshelf/pull/1816) ([kubihie](https://github.com/kubihie))
+
 ## [7.0.8](https://github.com/berkshelf/berkshelf/tree/7.0.8) (2019-03-18)
 [Full Changelog](https://github.com/berkshelf/berkshelf/compare/v7.0.7...7.0.8)
 

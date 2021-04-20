@@ -176,10 +176,10 @@ module Berkshelf
     # @option options [String] :path
     #   path to the metadata file
     def metadata(options = {})
-      path          = options[:path] || File.dirname(filepath)
+      path = options[:path] || File.dirname(filepath)
 
       loader = Chef::Cookbook::CookbookVersionLoader.new(path)
-      loader.load_cookbooks
+      loader.load!
       cookbook_version = loader.cookbook_version
       metadata = cookbook_version.metadata
 
@@ -500,7 +500,7 @@ module Berkshelf
           latest = cookbooks.select do |cookbook|
             (include_non_satisfying || dependency.version_constraint.satisfies?(cookbook.version)) &&
               Semverse::Version.coerce(cookbook.version) > dependency.locked_version
-          end.sort_by(&:version).last
+          end.max_by(&:version)
 
           unless latest.nil?
             hash[name] ||= {
@@ -740,41 +740,41 @@ module Berkshelf
 
     private
 
-      # Ensure the lockfile is present on disk.
-      #
-      # @raise [LockfileNotFound]
-      #   if the lockfile does not exist on disk
-      #
-      # @return [true]
+    # Ensure the lockfile is present on disk.
+    #
+    # @raise [LockfileNotFound]
+    #   if the lockfile does not exist on disk
+    #
+    # @return [true]
     def validate_lockfile_present!
       raise LockfileNotFound unless lockfile.present?
 
       true
     end
 
-      # Ensure that all dependencies defined in the Berksfile exist in this
-      # lockfile.
-      #
-      # @raise [LockfileOutOfSync]
-      #   if there are dependencies specified in the Berksfile which do not
-      #   exist (or are not satisifed by) the lockfile
-      #
-      # @return [true]
+    # Ensure that all dependencies defined in the Berksfile exist in this
+    # lockfile.
+    #
+    # @raise [LockfileOutOfSync]
+    #   if there are dependencies specified in the Berksfile which do not
+    #   exist (or are not satisifed by) the lockfile
+    #
+    # @return [true]
     def validate_lockfile_trusted!
       raise LockfileOutOfSync unless lockfile.trusted?
 
       true
     end
 
-      # Ensure that all dependencies in the lockfile are installed on this
-      # system. You should validate that the lockfile can be trusted before
-      # using this method.
-      #
-      # @raise [DependencyNotInstalled]
-      #   if the dependency in the lockfile is not in the Berkshelf shelf on
-      #   this system
-      #
-      # @return [true]
+    # Ensure that all dependencies in the lockfile are installed on this
+    # system. You should validate that the lockfile can be trusted before
+    # using this method.
+    #
+    # @raise [DependencyNotInstalled]
+    #   if the dependency in the lockfile is not in the Berkshelf shelf on
+    #   this system
+    #
+    # @return [true]
     def validate_dependencies_installed!
       lockfile.graph.locks.each do |_, dependency|
         unless dependency.installed?
@@ -785,13 +785,13 @@ module Berkshelf
       true
     end
 
-      # Determine if any cookbooks were specified that aren't in our shelf.
-      #
-      # @param [Array<String>] names
-      #   a list of cookbook names
-      #
-      # @raise [DependencyNotFound]
-      #   if a cookbook name is given that does not exist
+    # Determine if any cookbooks were specified that aren't in our shelf.
+    #
+    # @param [Array<String>] names
+    #   a list of cookbook names
+    #
+    # @raise [DependencyNotFound]
+    #   if a cookbook name is given that does not exist
     def validate_cookbook_names!(names)
       missing = names - lockfile.graph.locks.keys
 

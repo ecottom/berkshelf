@@ -4,8 +4,9 @@ module Berkshelf
   describe Source do
     let(:berksfile) { double("Berksfile", filepath: "/test/Berksfile") }
     let(:arguments) { [] }
+    let(:kwargs) { {} }
     let(:config) { Config.new }
-    subject(:instance) { described_class.new(berksfile, *arguments) }
+    subject(:instance) { described_class.new(berksfile, *arguments, **kwargs) }
     before do
       allow(Berkshelf::Config).to receive(:instance).and_return(config)
     end
@@ -19,7 +20,8 @@ module Berkshelf
       end
 
       context "with a string argument and options" do
-        let(:arguments) { ["https://example.com", { key: "value" }] }
+        let(:arguments) { ["https://example.com" ] }
+        let(:kwargs) { { key: "value" } }
         it { is_expected.to eq :supermarket }
       end
 
@@ -29,7 +31,8 @@ module Berkshelf
       end
 
       context "with a symbol argument and options" do
-        let(:arguments) { [:chef_server, { key: "value" }] }
+        let(:arguments) { [:chef_server ] }
+        let(:kwargs) { { key: "value" } }
         it { is_expected.to eq :chef_server }
       end
 
@@ -44,7 +47,8 @@ module Berkshelf
       end
 
       context "with a hash argument and disconnected options" do
-        let(:arguments) { [{ artifactory: "https://example.com/api/chef/chef-virtual" }, { key: "value" }] }
+        let(:arguments) { [{ artifactory: "https://example.com/api/chef/chef-virtual" }] }
+        let(:kwargs) { { key: "value" } }
         it { is_expected.to eq :artifactory }
       end
     end
@@ -58,7 +62,8 @@ module Berkshelf
       end
 
       context "with a string argument and options" do
-        let(:arguments) { ["https://example.com", { key: "value" }] }
+        let(:arguments) { ["https://example.com" ] }
+        let(:kwargs) { { key: "value" } }
         it { is_expected.to eq "https://example.com" }
       end
 
@@ -69,7 +74,8 @@ module Berkshelf
       end
 
       context "with a symbol argument and options" do
-        let(:arguments) { [:chef_server, { key: "value" }] }
+        let(:arguments) { [:chef_server] }
+        let(:kwargs) { { key: "value" } }
         before { config.chef.chef_server_url = "https://chefserver/" }
         it { is_expected.to eq "https://chefserver/" }
       end
@@ -85,7 +91,8 @@ module Berkshelf
       end
 
       context "with a hash argument and disconnected options" do
-        let(:arguments) { [{ artifactory: "https://example.com/api/chef/chef-virtual" }, { key: "value" }] }
+        let(:arguments) { [{ artifactory: "https://example.com/api/chef/chef-virtual" } ] }
+        let(:kwargs) { { key: "value" } }
         it { is_expected.to eq "https://example.com/api/chef/chef-virtual" }
       end
 
@@ -96,7 +103,7 @@ module Berkshelf
 
       context "with a chef_repo source" do
         let(:arguments) { [{ chef_repo: "." }] }
-        it { is_expected.to eq(windows? ? "file://C/test" : "file:///test") }
+        it { is_expected.to eq(windows? ? "file://D/test" : "file:///test") }
       end
     end
 
@@ -119,7 +126,8 @@ module Berkshelf
       end
 
       context "with a string argument and options" do
-        let(:arguments) { ["https://example.com", { key: "value" }] }
+        let(:arguments) { ["https://example.com"] }
+        let(:kwargs) { { key: "value" } }
         its([:key]) { is_expected.to eq "value" }
       end
 
@@ -129,7 +137,8 @@ module Berkshelf
       end
 
       context "with a symbol argument and options" do
-        let(:arguments) { [:chef_server, { key: "value" }] }
+        let(:arguments) { [:chef_server] }
+        let(:kwargs) { { key: "value" } }
         its([:key]) { is_expected.to eq "value" }
       end
 
@@ -144,7 +153,8 @@ module Berkshelf
       end
 
       context "with a hash argument and disconnected options" do
-        let(:arguments) { [{ artifactory: "https://example.com/api/chef/chef-virtual" }, { key: "value" }] }
+        let(:arguments) { [{ artifactory: "https://example.com/api/chef/chef-virtual" } ] }
+        let(:kwargs) { { key: "value" } }
         its([:key]) { is_expected.to eq "value" }
       end
 
@@ -156,7 +166,7 @@ module Berkshelf
 
       context "with a chef_repo source" do
         let(:arguments) { [{ chef_repo: "." }] }
-        its([:path]) { is_expected.to eq(windows? ? "C:/test" : "/test") }
+        its([:path]) { is_expected.to eq(windows? ? "D:/test" : "/test") }
       end
     end
 

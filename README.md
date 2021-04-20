@@ -1,15 +1,15 @@
 # Berkshelf
+
 [![Gem Version](https://img.shields.io/gem/v/berkshelf.svg)][gem]
-[![Build Status](https://img.shields.io/travis/berkshelf/berkshelf.svg)][travis]
+![Matrix Testing](https://github.com/berkshelf/berkshelf/workflows/Matrix%20Testing/badge.svg?branch=master)
 
 [gem]: https://rubygems.org/gems/berkshelf
-[travis]: https://travis-ci.org/berkshelf/berkshelf
 
-Manage a Cookbook or an Application's Cookbook dependencies
+Manage Chef Infra cookbooks and cookbook dependencies
 
 ## Installation
 
-Berkshelf is now included as part of the [Chef-DK](https://downloads.chef.io/chef-dk/). This is fastest, easiest, and the recommended installation method for getting up and running with Berkshelf.
+Berkshelf is now included as part of the [Chef Workstation](https://downloads.chef.io/tools/workstation). This is fastest, easiest, and the recommended installation method for getting up and running with Berkshelf.
 
 > note: You may need to uninstall the Berkshelf gem especially if you are using a Ruby version manager you may need to uninstall all Berkshelf gems from each Ruby installation.
 
@@ -31,7 +31,7 @@ $ gem install berkshelf
 
 ## Usage
 
-See [docs.chef.io](https://docs.chef.io/berkshelf.html) for up-to-date usage instructions.
+See [docs.chef.io](https://docs.chef.io/workstation/berkshelf/) for up-to-date usage instructions.
 
 ## CLI Usage
 
@@ -39,7 +39,7 @@ Berkshelf is intended to be used as a CLI tool.  It is not intended to be used a
 
 ## Supported Platforms
 
-Berkshelf is tested and supported on Ruby 2.3 and 2.4.
+Berkshelf is tested and supported on Ruby 2.4 and later.
 
 ## Configuration
 

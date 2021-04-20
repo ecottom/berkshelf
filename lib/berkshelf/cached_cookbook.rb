@@ -1,6 +1,6 @@
 require "chef/cookbook/cookbook_version_loader"
 require "chef/cookbook/syntax_check"
-require "berkshelf/errors"
+require_relative "errors"
 require "chef/json_compat"
 
 module Berkshelf
@@ -66,7 +66,7 @@ module Berkshelf
       @loader ||=
         begin
           loader = Chef::Cookbook::CookbookVersionLoader.new(@path)
-          loader.load_cookbooks
+          loader.load!
           loader
         end
     end
@@ -151,7 +151,8 @@ module Berkshelf
     def validate
       raise IOError, "No Cookbook found at: #{path}" unless path.exist?
 
-      syntax_checker = Chef::Cookbook::SyntaxCheck.for_cookbook(cookbook_name, path)
+      syntax_checker = Chef::Cookbook::SyntaxCheck.new(path.to_path)
+
       unless syntax_checker.validate_ruby_files
         raise Berkshelf::Errors::CookbookSyntaxError, "Invalid ruby files in cookbook: #{cookbook_name} (#{version})."
       end

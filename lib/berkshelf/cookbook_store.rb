@@ -1,4 +1,4 @@
-require "fileutils"
+require "fileutils" unless defined?(FileUtils)
 require "chef/exceptions"
 
 module Berkshelf
@@ -49,9 +49,7 @@ module Berkshelf
 
     # Destroy the contents of the initialized storage path.
     def clean!
-      Dir.chdir(storage_path) do
-        FileUtils.rm_rf(Dir.glob("*"))
-      end
+      FileUtils.rm_rf(Dir.glob("#{storage_path}/*"))
     end
 
     # Import a cookbook found on the local filesystem into this instance of the cookbook store.

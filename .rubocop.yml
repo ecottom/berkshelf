@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - "spec/tmp/**/*"
     - "tmp/**/*"
+    - "vendor/**/*"
 Security/Eval:
   Enabled: false
 Lint/AmbiguousRegexpLiteral:
@@ -10,3 +11,5 @@ Lint/AmbiguousBlockAssociation:
   Enabled: false
 Style/HashSyntax:
   Enabled: true
+Layout/EndOfLine:
+  EnforcedStyle: native
